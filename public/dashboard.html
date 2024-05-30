@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr-FR">
+<head>
+    <title>Logs du pare-feu</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+    <header>
+        <h1>Logs du pare-feu web WEF</h1>
+    </header>
+
+    <main>
+        <section class="log-box-entire">
+            <div class="log-container">
+                <div class="log-header">
+                    Logs
+                    <input type="text" id="searchInput" placeholder="Rechercher parmi les hits...">
+                </div>
+                <code>
+                    <div class="log-box">
+                        <!-- Les logs récupérés sont affichés ici -->
+                    </div>
+                </code>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="group-container">
+            <div class="group">
+                <ul>
+                    <h3>Auteurs</h3>
+                    <li>Swann Dehiles</li>
+                    <li>François Houssin</li>
+                    <li>Arman Arakelian</li>
+                    <li>Corentin Herr</li>
+                    <li>Gaël Belleville</li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+    <script src="js/fetchLogs.js"></script>
+</body>
+</html>
