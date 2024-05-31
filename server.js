@@ -1,15 +1,20 @@
 const express = require('express');
+
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
 
+const loginRouter = require('./routes/login');
+const logsRouter = require('./routes/dashboard');
+
 const app = express();
+app.set('view engine', 'ejs');
 
 // Connexion à MongoDB
 mongoose.connect('mongodb://localhost:27017/loginApp', { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log('Connexion à MongoDB réussie !'))
-    .catch(err => console.error('Erreur de connexion à MongoDB :', err));
+    .then(() => console.log('Connexion à MongoDB - LoginApp réussie !'))
+    .catch(err => console.error('Erreur de connexion à MongoDB - LoginAPP :', err));
 
 // Configuration de body-parser
 app.use(bodyParser.urlencoded({ extended: false })); // Permet à Express de traduire le json en objet
@@ -22,21 +27,8 @@ app.use(session({
     cookie: { secure: false } // En prod ce serait différent
 }));
 
-// Définition du modèle d'utilisateur
-const userSchema = new mongoose.Schema({
-    username: { type: String, required: true, unique: true },
-    password: { type: String, required: true }
-});
-const User = mongoose.model('User', userSchema);
-
-const logSchema = new mongoose.Schema({
-    method : { type: String, required: true },
-    fullUrl : { type: String, required: true },
-    body : { type: String, required: true },
-    ruleId : { type: String, required: true },
-    action : { type: String, required: true },
-    message : { type: String, required: true },
-})
+// Jointure des modèles mongoDB des logs
+const Logs = require('./models/logsM');
 
 // Route de la page d'accueil
 app.get('/', (req, res) => {
@@ -46,46 +38,7 @@ app.get('/', (req, res) => {
     res.redirect('/login');
 });
 
-// Route de la page de connexion
-app.get('/login', (req, res) => {
-    res.sendFile(__dirname + '/public/login.html');
-});
-
-// Gestion de la soumission du formulaire de connexion
-app.post('/login', (req, res) => {
-    const { username, password } = req.body;
-
-    User.findOne({ username: username }, (err, user) => {
-        if (err) {
-            return res.status(500).send('Erreur interne');
-        }
-
-        if (!user) {
-            return res.status(400).send('Nom d\'utilisateur ou mot de passe incorrect');
-        }
-
-        bcrypt.compare(password, user.password, (err, result) => {
-            if (err) {
-                return res.status(500).send('Erreur interne');
-            }
-
-            if (result) {
-                req.session.userId = user._id;
-                return res.redirect('/dashboard');
-            } else {
-                res.status(400).send('Nom d\'utilisateur ou mot de passe incorrect');
-            }
-        });
-    });
-});
-
-// Route de la page du tableau de bord (dashboard)
-app.get('/dashboard', (req, res) => {
-    if (!req.session.userId) {
-        return res.redirect('/login');
-    }
-    res.sendFile(__dirname + '/public/dashboard.html');
-});
+app.use('/login', loginRouter);
 
 // Servir les fichiers statiques
 app.use(express.static('public'));
