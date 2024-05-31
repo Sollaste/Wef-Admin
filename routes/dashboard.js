@@ -2,11 +2,11 @@ const express = require('express');
 const router = express.Router();
 
 // Route de la page du tableau de bord (dashboard)
-router.get('/dashboard', (req, res) => {
+router.get('/', (req, res) => {
     if (!req.session.userId) {
-        return res.render(path.join(__dirname, '../views', 'dashboard'));
+        return res.redirect('/login');
     }
-    res.render(__dirname + '');
+    res.render('dashboard');
 });
 
 module.exports = router;

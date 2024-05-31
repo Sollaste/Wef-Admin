@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 logs.forEach(log => {
                     const logDiv = document.createElement('div');
                     logDiv.classList.add('log');
-                    logDiv.innerHTML = `<span class="Attaque">${log.type}</span><span class="message">${log.message}</span>`;
+                    logDiv.innerHTML = `<span class="method">${log.method}</span><span class="fullUrl">${log.fullUrl}</span><span class="body">${log.body}</span><span class="ruleId">${log.ruleId}</span><span class="action">${log.action}</span><span class="message">${log.message}</span>`;
                     logsContainer.appendChild(logDiv);
                 });
             })

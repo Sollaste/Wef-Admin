@@ -1,3 +1,5 @@
+// Méthode pour ajouter des utilisateurs
+
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
@@ -6,13 +8,8 @@ mongoose.connect('mongodb://localhost:27017/loginApp', { useNewUrlParser: true, 
     .then(() => console.log('Connexion à MongoDB réussie !'))
     .catch(err => console.error('Erreur de connexion à MongoDB :', err));
 
-// Définition du modèle d'utilisateur
-const userSchema = new mongoose.Schema({
-    username: { type: String, required: true, unique: true },
-    password: { type: String, required: true }
-});
-
-const User = mongoose.model('User', userSchema);
+// Importation du modèle d'utilisateur
+const User = require('../models/userM');
 
 // Ajouter un utilisateur
 const username = 'WefUser';
