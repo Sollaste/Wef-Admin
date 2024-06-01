@@ -33,10 +33,14 @@ app.use(express.static('public'));
 // Importation des routeurs
 const loginRouter = require('./routes/login');
 const logsRouter = require('./routes/dashboard');
+const logRouter = require('./routes/log');
 
 // Usage des routeurs
 app.use('/login', loginRouter);
 app.use('/dashboard', logsRouter);
+
+// Route de l'API REST (Récupérateur et poster de logs)
+app.use('/api', logRouter);
 
 // Route de la page d'accueil
 app.get('/', (req, res) => {
@@ -45,10 +49,6 @@ app.get('/', (req, res) => {
     }
     res.redirect('/login');
 });
-
-// Route de l'API REST (Récupérateur et poster de logs)
-const logRouter = require('./routes/log');
-app.use('/api', logRouter);
 
 // =================== FIN DES ROUTES & VUES ===================
 
