@@ -1,7 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
 const session = require('express-session');
 const path = require('path');
 
@@ -9,7 +8,6 @@ const app = express();
 
 // Ajout du coeur ejs
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
 
 // Connexion à MongoDB
 mongoose.connect('mongodb://localhost:27017/loginApp', { useNewUrlParser: true, useUnifiedTopology: true })
@@ -18,6 +16,7 @@ mongoose.connect('mongodb://localhost:27017/loginApp', { useNewUrlParser: true, 
 
 // Configuration de body-parser
 app.use(bodyParser.urlencoded({ extended: true })); // Permet à Express de traduire le json en objet
+app.use(bodyParser.json());
 
 // Configuration de express-session
 app.use(session({
@@ -47,17 +46,16 @@ app.get('/', (req, res) => {
     res.redirect('/login');
 });
 
+// Route de l'API REST (Récupérateur et poster de logs)
+const logRouter = require('./routes/log');
+app.use('/api', logRouter);
+
 // =================== FIN DES ROUTES & VUES ===================
 
 // Simuler les logs
 const logs = [
     { method : "Method", fullUrl : "URL", body : "Body", ruleId : "RuleID", action : "Action", message : "Message"}
 ];
-
-// Endpoint pour récupérer les logs
-app.get('/api/logs', (req, res) => {
-    res.json(logs);
-});
 
 // Démarrer le serveur
 const PORT = process.env.PORT || 3000;
