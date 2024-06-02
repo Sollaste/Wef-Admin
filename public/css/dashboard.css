@@ -1,8 +1,6 @@
-.log-box {
-  background-color: #f4f4f4;
-  border: 1px solid #ddd;
-  padding: 10px;
-  margin: 20px;
+.log-box-entire {
+  display: flex;
+  justify-content: center;
 }
 
 .log-container {
@@ -13,6 +11,13 @@
   color: #fff;
   overflow-y: auto;
   position: relative;
+}
+
+.log-box {
+  background-color: #f4f4f4;
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin: 20px;
 }
 
 .log-header {
@@ -29,7 +34,7 @@
 
 .log-header input[type="text"] {
   padding: 5px;
-  border: 1px solid #0000;
+  border: 1px solid #000;
   border-radius: 4px;
 }
 
@@ -37,37 +42,38 @@
   border-bottom: 1px solid #0087ff;
   padding-bottom: 5px;
   margin-bottom: 5px;
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.method, .fullUrl, .body, .ruleId, .action, .message {
+  display: inline-block;
+  margin-right: 10px;
 }
 
 .method {
   color: #999;
-  margin-right: 10px;
 }
 
 .fullUrl {
   color: #333;
-  margin-right: 5px;
-
 }
 
 .body {
   color: #333;
-  margin-right: 5px;
 }
 
 .ruleId {
   color: #333;
-  margin-right: 5px;
 }
 
 .action {
   color: #333;
-  margin-right: 5px;
 }
 
 .message {
   color: #333;
-  margin-right: 5px;
 }
 
 .group-container {
@@ -103,9 +109,4 @@ main {
   padding: 20px;
   display: flex;
   flex-direction: column;
-}
-
-.log-box-entire {
-  display: flex;
-  justify-content: center;
 }

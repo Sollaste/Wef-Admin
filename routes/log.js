@@ -19,7 +19,7 @@ router.route('/logs')
             res.status(400).json({ error });
         }
     })
-    // API permettant d'afficher les logs
+    // API permettant d'afficher les logs 
     .get(async (req, res) => {
         try {
           const log = await LogModel.find();

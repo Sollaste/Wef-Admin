@@ -1,6 +1,5 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
 const session = require('express-session');
 const path = require('path');
 
@@ -8,11 +7,6 @@ const app = express();
 
 // Ajout du coeur ejs
 app.set('view engine', 'ejs');
-
-// Connexion à MongoDB
-mongoose.connect('mongodb://localhost:27017/loginApp', { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log('Connexion à MongoDB - LoginApp réussie !'))
-    .catch(err => console.error('Erreur de connexion à MongoDB - LoginAPP :', err));
 
 // Configuration de body-parser
 app.use(bodyParser.urlencoded({ extended: true })); // Permet à Express de traduire le json en objet
@@ -22,10 +16,16 @@ app.use(bodyParser.json());
 app.use(session({
     secret: 'rfqHIe9tGpJ2aNpdgnjTRROFlwjnYZ5dmMIY8TFTmVIlSSqpjWXd9B4r2HXwaFdOLGOiGHvy44yk32cDQPalmumg6vIBUiBRZzC6', // Cookie de chiffrement
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: true
 }));
 
-// =================== ROUTE & VUES ===================
+// Définir l'en-tête X-Content-Type-Options: nosniff
+app.use((req, res, next) => {
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+    next();
+});
+
+// =================== ROUTE ===================
 
 // Servir les fichiers statiques
 app.use(express.static('public'));
@@ -39,7 +39,7 @@ const logRouter = require('./routes/log');
 app.use('/login', loginRouter);
 app.use('/dashboard', logsRouter);
 
-// Route de l'API REST (Récupérateur et poster de logs)
+// Route de l'API REST (logs)
 app.use('/api', logRouter);
 
 // Route de la page d'accueil
@@ -50,12 +50,7 @@ app.get('/', (req, res) => {
     res.redirect('/login');
 });
 
-// =================== FIN DES ROUTES & VUES ===================
-
-// Simuler les logs
-const logs = [
-    { method : "Method", fullUrl : "URL", body : "Body", ruleId : "RuleID", action : "Action", message : "Message"}
-];
+// =================== FIN DES ROUTES ===================
 
 // Démarrer le serveur
 const PORT = process.env.PORT || 3000;
