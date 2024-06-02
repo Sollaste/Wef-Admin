@@ -1,5 +1,3 @@
-const { response } = require("express");
-
 // Fonction pour récupérer et afficher les logs
 document.addEventListener('DOMContentLoaded', function() {
     const logsContainer = document.querySelector('.log-box');
