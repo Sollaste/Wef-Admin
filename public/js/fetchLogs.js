@@ -1,14 +1,11 @@
-// Fonction pour récupérer et afficher les logs
 document.addEventListener('DOMContentLoaded', function() {
     const logsContainer = document.querySelector('.log-box');
 
     // Fonction pour récupérer et afficher les logs
     function fetchLogs() {
-        console.log('Fetching logs...');
         fetch('/api/logs')
             .then(response => response.json())
             .then(logs => {
-                console.log('Logs fetched:', logs);
                 logsContainer.innerHTML = '';
                 logs.forEach(log => {
                     const logDiv = document.createElement('div');
@@ -23,6 +20,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     `;
                     logsContainer.appendChild(logDiv);
                 });
+
+                // Réappliquer le filtre de recherche après la mise à jour des logs
+                if (typeof window.filterLogs === 'function') {
+                    const searchInput = document.getElementById('searchInput');
+                    window.filterLogs(searchInput.value.toLowerCase());
+                }
             })
             .catch(error => console.error('Erreur en essayant de récupérer les logs :', error));
     }
@@ -30,6 +33,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Fetch toutes les 2s
     setInterval(fetchLogs, 2000);
 
-    // Fetch initial
+    // Premier fetch
     fetchLogs();
 });
