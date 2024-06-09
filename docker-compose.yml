@@ -11,10 +11,10 @@ services:
       - WEFREI_API_KEY=${WEFREI_API_KEY}
     depends_on:
       - mongodb
-    extra_hosts:
-      - mongodb:mongodb
+    restart: unless-stopped
   mongodb:
-    image: mongo:4.4.18
+    image: mongo:4.4.6
     ports:
       - "27017:27017"
+    restart: unless-stopped
       
