@@ -12,11 +12,9 @@ services:
       - ADMIN_PASS=${ADMIN_PASS}
     depends_on:
       - mongodb
-    links:
-      - mongodb
     restart: unless-stopped
-
   mongodb:
     image: mongo:4.4.6
     ports:
       - "27017:27017"
+    restart: unless-stopped
