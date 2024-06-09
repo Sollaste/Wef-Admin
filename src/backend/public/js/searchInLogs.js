@@ -5,19 +5,13 @@ document.addEventListener('DOMContentLoaded', function() {
     window.filterLogs = function(term) {
         const logs = document.querySelectorAll('.log');
         logs.forEach(function(log) {
-            const method = log.querySelector('.method').textContent.toLowerCase();
-            const fullUrl = log.querySelector('.fullUrl').textContent.toLowerCase();
-            const body = log.querySelector('.body').textContent.toLowerCase();
-            const ruleId = log.querySelector('.ruleId').textContent.toLowerCase();
-            const action = log.querySelector('.action').textContent.toLowerCase();
+            const ts = log.querySelector('.method').textContent.toLowerCase();
+            const level = log.querySelector('.ruleId').textContent.toLowerCase();
             const message = log.querySelector('.message').textContent.toLowerCase();
 
             if (
-                method.includes(term) || 
-                fullUrl.includes(term) || 
-                body.includes(term) || 
-                ruleId.includes(term) || 
-                action.includes(term) || 
+                ts.includes(term) ||
+                level.includes(term) ||
                 message.includes(term)
             ) {
                 log.style.display = 'block';

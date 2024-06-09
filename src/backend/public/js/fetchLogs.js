@@ -6,17 +6,16 @@ document.addEventListener('DOMContentLoaded', function() {
         fetch('/api/logs')
             .then(response => response.json())
             .then(logs => {
+                console.log("Received logs: ", logs)
                 logsContainer.innerHTML = '';
                 logs.forEach(log => {
                     const logDiv = document.createElement('div');
                     logDiv.classList.add('log');
+                    // TODO fix css method class dependency
                     logDiv.innerHTML = `
-                        <span class="method">${log.method}</span>
-                        <span class="fullUrl">${log.fullUrl}</span>
-                        <span class="body">${log.body}</span>
-                        <span class="ruleId">${log.ruleId}</span>
-                        <span class="action">${log.action}</span>
-                        <span class="message">${log.message}</span>
+                        <span class="method">${log.ts}</span>
+                        <span class="ruleId ${log.level}">${log.level}</span>
+                        <span class="message">${log.messge}</span>
                     `;
                     logsContainer.appendChild(logDiv);
                 });

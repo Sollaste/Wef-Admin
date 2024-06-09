@@ -52,6 +52,19 @@
   margin-right: 10px;
 }
 
+.warn {
+  color: orange;
+}
+.info {
+  color: green;
+}
+.error {
+  color: red;
+}
+.debug {
+  color: cyan;
+}
+
 .method {
   color: #999;
 }

@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 const User = require('../models/userM');
 
 // Route de la page de connexion
-router.get('/', (req, res) => {
+router.get('/', (_, res) => {
     res.render('login');
 });
 

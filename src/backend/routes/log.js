@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 
-// Importation du modèle de log - MongoDB
 const LogModel = require('../models/logsM');
 
 // API de gestion des logs
@@ -9,13 +8,20 @@ router.route('/logs')
     // API permettant de stocker les logs dans la base de données
     .post(async (req, res) => {
         try {
-            if (req.headers['WEFREI_API_KEY'] !== undefined && req.header['WEFREI_API_KEY'] === process.env.WEFREI_API_KEY) {
-                await log.save();
+            if (req.headers['wefrei_api_key'] !== undefined && req.headers['wefrei_api_key'] === process.env.WEFREI_API_KEY) {
+                console.log(req.body)
+                let log_entry = req.body
+                await LogModel.collection.insertOne({
+                    ts: log_entry.ts,
+                    level: log_entry.level,
+                    messge: log_entry.msg,
+                });
                 res.status(201).json({ message: 'Log enregistré !'});
             } else {
                 res.status(403).json({ message: "wrong or missing api key, please specify api key in a WEFREI_API_KEY HTTP header."})
             }
         } catch (error) {
+            console.log(error)
             res.status(400).json({ error });
         }
     })

@@ -2,14 +2,11 @@ const mongoose = require('mongoose');
 
 var log = mongoose.createConnection('mongodb://mongodb/logs')
 
-// Définition du modèle de logs dans mongoDB
+// TODO expend log entry data
 var Logs = log.model('Logs', new mongoose.Schema({
-    method : { type: String, required: true },
-    fullUrl : { type: String, required: true },
-    body : { type: String, required: true },
-    ruleId : { type: String, required: true },
-    action : { type: String, required: true },
-    message : { type: String, required: true },
+    level : { type: String, required: true },
+    ts : { type: String, required: true },
+    msg : { type: String, required: true },
 }));
 
 module.exports = Logs;
