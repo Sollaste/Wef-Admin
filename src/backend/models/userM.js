@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-var user = mongoose.createConnection('mongodb://localhost/loginApp')
+var user = mongoose.createConnection('mongodb://mongodb/loginApp')
 
 // Définition du modèle d'utilisateur dans mongoDB
 var User = user.model('User', new mongoose.Schema({

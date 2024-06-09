@@ -1,0 +1,18 @@
+
+services:
+  backend:
+    build:
+      context: ./src/backend
+      dockerfile: Dockerfile
+    container_name: backend
+    ports:
+      - "80:3000"
+    environment:
+      - WEFREI_API_KEY=${WEFREI_API_KEY}
+    depends_on:
+      - mongodb
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"
+      

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-var log = mongoose.createConnection('mongodb://localhost/logs')
+var log = mongoose.createConnection('mongodb://mongodb/logs')
 
 // Définition du modèle de logs dans mongoDB
 var Logs = log.model('Logs', new mongoose.Schema({
